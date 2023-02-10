@@ -17,5 +17,18 @@ from sklearn.svm import SVC
 
 # Loading the dataset
 url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/iris.csv"
+url = "iris.csv"
 names = ['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'class']
 dataset = read_csv(url, names=names)
+
+# Dimensions of the dataset
+print("Dimensions of the dataset : ", dataset.shape)
+
+# Take a peek at the data
+print(dataset.head(20)) # Prints the first 20 rows
+
+# Statistical summary
+print(dataset.describe())
+
+# Class distribution
+print(dataset.groupby('class').size())
