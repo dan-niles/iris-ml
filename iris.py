@@ -15,28 +15,44 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
 
-# Loading the dataset
-url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/iris.csv"
-url = "iris.csv"
-names = ['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'class']
-dataset = read_csv(url, names=names)
+# Prints the summary of the dataset
+def dataset_summary(dataset):
+    # Dimensions of the dataset
+    print("Dimensions of the dataset : ", dataset.shape)
 
-# Dimensions of the dataset
-print("Dimensions of the dataset : ", dataset.shape)
+    # Take a peek at the data
+    print(dataset.head(20)) # Prints the first 20 rows
 
-# Take a peek at the data
-print(dataset.head(20)) # Prints the first 20 rows
+    # Statistical summary
+    print(dataset.describe())
 
-# Statistical summary
-print(dataset.describe())
+    # Class distribution
+    print(dataset.groupby('class').size())
 
-# Class distribution
-print(dataset.groupby('class').size())
+# Visualizes the dataset
+def dataset_visualize(dataset):
+    # Univariate plots - Box and Whisker plots
+    dataset.plot(kind='box', subplots=True, layout=(2,2), sharex=False, sharey=False)
+    pyplot.show()
 
-# Univariate plots - Box and Whisker plots
-dataset.plot(kind='box', subplots=True, layout=(2,2), sharex=False, sharey=False)
-pyplot.show()
+    # Univariate plots - Histograms
+    dataset.hist()
+    pyplot.show()
 
-# Univariate plots - Histograms
-dataset.hist()
-pyplot.show()
+    # Multi-variate plots - Scatter plot matrix
+    scatter_matrix(dataset)
+    pyplot.show()
+
+if __name__ == "__main__":
+    # Loading the dataset
+    url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/iris.csv"
+    url = "iris.csv"
+    names = ['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'class']
+    dataset = read_csv(url, names=names)
+
+    dataset_summary(dataset)
+    dataset_visualize(dataset)
+
+
+
+
