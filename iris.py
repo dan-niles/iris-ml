@@ -53,7 +53,7 @@ def split_dataset(dataset):
     return X_train, X_validation, Y_train, Y_validation
 
 # Identify best model to train the dataset
-def analyze_models(X_train, Y_train):
+def analyze_models():
     # Spot Check Algorithms
     models = []
     models.append(('LR', LogisticRegression(solver='liblinear', multi_class='ovr')))
@@ -78,7 +78,7 @@ def analyze_models(X_train, Y_train):
     pyplot.title('Algorithm Comparison')
     pyplot.show()
 
-def train_model(X_train, Y_train):
+def train_model():
     # Make predictions on validation dataset
     model = SVC(gamma='auto')
     model.fit(X_train, Y_train)
@@ -105,9 +105,9 @@ if __name__ == "__main__":
 
     X_train, X_validation, Y_train, Y_validation = split_dataset(dataset)
 
-    # analyze_models(X_train, Y_train)
+    # analyze_models()
 
-    model = train_model(X_train, Y_train)
+    model = train_model()
 
 
 
