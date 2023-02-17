@@ -16,7 +16,7 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
 
 # Prints the summary of the dataset
-def dataset_summary(dataset):
+def summarize_dataset(dataset):
     # Dimensions of the dataset
     print("Dimensions of the dataset : ", dataset.shape)
 
@@ -30,7 +30,7 @@ def dataset_summary(dataset):
     print(dataset.groupby('class').size())
 
 # Visualizes the dataset
-def dataset_visualize(dataset):
+def visualize_dataset(dataset):
     # Univariate plots - Box and Whisker plots
     dataset.plot(kind='box', subplots=True, layout=(2,2), sharex=False, sharey=False)
     pyplot.show()
@@ -43,6 +43,15 @@ def dataset_visualize(dataset):
     scatter_matrix(dataset)
     pyplot.show()
 
+# Split-out validation dataset
+def split_dataset(dataset):
+    array = dataset.values
+    X = array[:,0:4]
+    y = array[:,4]
+    X_train, X_validation, Y_train, Y_validation = train_test_split(X, y, test_size=0.20, random_state=1)
+
+    return X_train, X_validation, Y_train, Y_validation
+
 if __name__ == "__main__":
     # Loading the dataset
     url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/iris.csv"
@@ -50,8 +59,9 @@ if __name__ == "__main__":
     names = ['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'class']
     dataset = read_csv(url, names=names)
 
-    dataset_summary(dataset)
-    dataset_visualize(dataset)
+    # summarize_dataset(dataset)
+    # visualize_dataset(dataset)
+    X_train, X_validation, Y_train, Y_validation = split_dataset(dataset)
 
 
 
