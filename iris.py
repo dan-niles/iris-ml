@@ -52,6 +52,33 @@ def split_dataset(dataset):
 
     return X_train, X_validation, Y_train, Y_validation
 
+# Identify best model to train the dataset
+def analyze_models(X_train, Y_train):
+    # Spot Check Algorithms
+    models = []
+    models.append(('LR', LogisticRegression(solver='liblinear', multi_class='ovr')))
+    models.append(('LDA', LinearDiscriminantAnalysis()))
+    models.append(('KNN', KNeighborsClassifier()))
+    models.append(('CART', DecisionTreeClassifier()))
+    models.append(('NB', GaussianNB()))
+    models.append(('SVM', SVC(gamma='auto')))
+
+    # Evaluate each model in turn
+    results = []
+    names = []
+    for name, model in models:
+        kfold = StratifiedKFold(n_splits=10, random_state=1, shuffle=True)
+        cv_results = cross_val_score(model, X_train, Y_train, cv=kfold, scoring='accuracy')
+        results.append(cv_results)
+        names.append(name)
+        print('%s: %f (%f)' % (name, cv_results.mean(), cv_results.std()))
+
+    # Compare Algorithms
+    pyplot.boxplot(results, labels=names)
+    pyplot.title('Algorithm Comparison')
+    pyplot.show()
+
+
 if __name__ == "__main__":
     # Loading the dataset
     url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/iris.csv"
@@ -62,6 +89,7 @@ if __name__ == "__main__":
     # summarize_dataset(dataset)
     # visualize_dataset(dataset)
     X_train, X_validation, Y_train, Y_validation = split_dataset(dataset)
+    analyze_models(X_train, Y_train)
 
 
 
