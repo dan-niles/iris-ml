@@ -78,6 +78,19 @@ def analyze_models(X_train, Y_train):
     pyplot.title('Algorithm Comparison')
     pyplot.show()
 
+def train_model(X_train, Y_train):
+    # Make predictions on validation dataset
+    model = SVC(gamma='auto')
+    model.fit(X_train, Y_train)
+    predictions = model.predict(X_validation)
+
+    # Evaluate predictions
+    print(accuracy_score(Y_validation, predictions))
+    print(confusion_matrix(Y_validation, predictions))
+    print(classification_report(Y_validation, predictions))
+
+    return model
+
 
 if __name__ == "__main__":
     # Loading the dataset
@@ -87,9 +100,16 @@ if __name__ == "__main__":
     dataset = read_csv(url, names=names)
 
     # summarize_dataset(dataset)
+
     # visualize_dataset(dataset)
+
     X_train, X_validation, Y_train, Y_validation = split_dataset(dataset)
-    analyze_models(X_train, Y_train)
+
+    # analyze_models(X_train, Y_train)
+
+    model = train_model(X_train, Y_train)
+
+
 
 
 
